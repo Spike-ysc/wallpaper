@@ -254,11 +254,12 @@ export default {
               type: "warning",
             });
           }
-          for (let i in res.content) {
-            this.wallpapers.push(res.content[i]);
-          }
-          // this.totalElements = res.page.totalElements;
-          //   window.scroll(0, 0);
+           for (let i in res.content) {
+             if(typeof res.content[i].id === "number"){
+
+              this.wallpapers.push(res.content[i]);
+             }
+            }
           console.log(res);
           console.log(this.wallpapers);
 

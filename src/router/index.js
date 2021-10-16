@@ -7,6 +7,7 @@ import animation from '@/page/animation/index'
 import book from '@/page/book/index'
 import photo from '@/page/wallpaper/photo'
 import wallpaperdemo from '@/page/wallpaper/index-demo'
+import error from '@/page/error/404'
 
 Vue.use(Router)
 
@@ -51,5 +52,10 @@ export default new Router({
             name: 'book',
             component: book
         },
+        {
+            path: '/error',
+            name: 'error',
+            component: error
+        }
     ]
 })

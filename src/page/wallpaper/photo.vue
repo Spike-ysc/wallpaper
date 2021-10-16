@@ -10,6 +10,7 @@
             <div>
               <el-image
                 class="img"
+                v-progressive="src"
                 :src="img"
                 :fit="imgFit"
                 layz
@@ -17,10 +18,10 @@
               >
               
                 <div slot="placeholder" class="image-slot">
-                  <i class="el-icon-loading">加载中</i>
+                  <i class="el-icon-loading loading icon-style" ></i>
               </div>
                 <div slot="error" class="image-slot">
-                  <i class="el-icon-loading"></i>
+                  <i class="el-icon-loading loading icon-style" ></i>
                 </div>
               </el-image>
             </div>
@@ -227,6 +228,11 @@ export default {
   width: 100%;
   height: 100%;
   background: #545864;
+}
+.icon-style{
+  color: white;
+  background: transparent;
+  font-size: 18px;
 }
 .msg-title {
   color: #5a5b5d;
