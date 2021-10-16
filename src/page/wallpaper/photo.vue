@@ -10,7 +10,6 @@
             <div>
               <el-image
                 class="img"
-                v-progressive="src"
                 :src="img"
                 :fit="imgFit"
                 layz
@@ -119,7 +118,7 @@ export default {
       wallpaper: "",
       type: "",
       size: "",
-      imgFit: "contain",
+      imgFit: "fill",
       srcList: [],
     };
   },
@@ -217,12 +216,13 @@ export default {
 <style scoped lang="scss">
 .main {
   background: #1f2023;
-  height: 100%;
+  // height: 100%;
+  min-height: 100%;
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
 }
 .image-slot {
   width: 100%;
