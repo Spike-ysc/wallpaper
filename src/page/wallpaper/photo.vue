@@ -26,7 +26,7 @@
             </div>
           </el-main>
         </el-container>
-        <el-aside>
+        <el-aside class="hidden-xs-only">
           <p class="title">Tags</p>
           <div class="div-box">
             <div v-for="(tag, index) in tags" :key="index">
@@ -101,7 +101,84 @@
           >
         </el-aside>
       </el-container>
+     
     </el-container>
+    <div class="xs-box">
+      
+        <p class="div-hint">长按保存图片</p>
+        <p class="title">Tags</p>
+          <div class="div-box">
+            <div v-for="(tag, index) in tags" :key="index">
+              <div class="div-tag">
+                <el-link
+                  class="box-link"
+                  :underline="false"
+                  @click="homePage(tag)"
+                  >{{ tag }}</el-link
+                >
+              </div>
+            </div>
+            <div style="clear: both"></div>
+          </div>
+          <p class="title">Colors</p>
+          <div class="div-box">
+            <div v-for="(color, index) in colors" :key="index">
+              <div class="div-tag" v-bind:style="{ background: color }">
+                <el-link
+                  class="box-link"
+                  :underline="false"
+                  @click="homePage"
+                  >{{ color }}</el-link
+                >
+              </div>
+            </div>
+            <div style="clear: both"></div>
+          </div>
+          <div>
+            <!-- <el-tag type="danger" size="normal"  effect="dark" ></el-tag> -->
+            <!--                       
+                      <el-tag 
+                      effect="dark"
+                        v-for="tag in tags"
+                        :key="tag.name"
+                        :type="danger">
+                        {{tag.name}}
+                        </el-tag> -->
+          </div>
+          <div>
+            <p class="msg-title">Type</p>
+            <p class="msg-content">{{ wallpaper.imgType }}</p>
+          </div>
+          <div style="clear: both"></div>
+          <el-divider class="divider"></el-divider>
+          <div>
+            <p class="msg-title">imgSize</p>
+            <p class="msg-content">{{ wallpaper.imgSize }}</p>
+          </div>
+          <div style="clear: both"></div>
+          <el-divider class="divider"></el-divider>
+          <div>
+            <p class="msg-title">storageSize</p>
+            <p class="msg-content">{{ wallpaper.storageSize }}</p>
+          </div>
+          <div style="clear: both"></div>
+          <el-divider class="divider"></el-divider>
+          <div>
+            <p class="msg-title">uploadTime</p>
+            <p class="msg-content">{{ wallpaper.uploadTime }}</p>
+          </div>
+          <div style="clear: both"></div>
+          <el-divider class="divider"></el-divider>
+
+          <!-- <el-button
+            class="download hidden-xs-only"
+            type="primary"
+            size="default"
+            download="img"
+            @click="download"
+            >下载原图</el-button
+          > -->
+     </div>
   </div>
 </template>
 
@@ -140,7 +217,7 @@ export default {
     },
     homePage(data) {
       this.$router.push({
-        name: "wallpaper-demo",
+        name: "wallpaper-infinite",
         params: {
           tag: data,
         },
@@ -161,10 +238,10 @@ export default {
 
       //实例化一个img对象
       const img = new Image();
-      //设置img的图片路径
-      img.src = this.img;
       //设置跨域解决
       img.setAttribute("crossOrigin", "Anonymous");
+      //设置img的图片路径
+      img.src = this.img;
       //img加载完后处理
       img.onload = function () {
         //创建一个canvas对象
@@ -178,14 +255,46 @@ export default {
         // 将img中的内容画到画布上
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         // 将画布内容转换为base64
-        let base64 = canvas.toDataURL();
-        // 创建a链接
+        let base64
+         if(vm.wallpaper.imgType == "PNG"){
+           base64 = canvas.toDataURL("image/png");
+        }else{
+           base64 = canvas.toDataURL("image/jpeg");
+        }
+        // let base64 = canvas.toDataURL("image/png");
+        // var binStr = window.atob(base64.split(',')[1]),
+        // len = binStr.length,
+        // arr = new Uint8Array(len);
+
+        // for (var i = 0; i < len; i++) {
+        //   arr[i] = binStr.charCodeAt(i);
+        // }
+        // let blob = new Blob([arr], {
+        //         'type': 'image/png'
+        // });
         const a = document.createElement("a");
+        let event = new MouseEvent("click");
         a.href = base64;
-        a.download = vm.wallpaper.imgKey;
+        // a.href = URL.createObjectURL(blob);
+       
+        console.log(vm.wallpaper.imgType+"--"+a.download)
+         if(vm.wallpaper.imgType == "PNG"){
+           a.download = vm.wallpaper.imgKey+".png"||"wallpaper.png";
+        }else{
+           a.download = vm.wallpaper.imgKey+".jpg"||"wallpaper.jpg";
+        }
+      // a.download = vm.wallpaper.imgKey+".png"||"wallpaper.png";
+          // a.download = vm.wallpaper.imgKey +".png"
+        // a.download = vm.wallpaper.imgKey||"wallpaper.png";
         // 触发a链接点击事件，浏览器开始下载文件
-        a.click();
+        // a.click();
+       a.dispatchEvent(event)
+       // for IE
+        // if (window.navigator.msSaveBlob) {
+        //   navigator.msSaveBlob(blob, "wallpaper.png");
+        // }
       };
+      
 
       //   function downloadByAxios(url,name){
       // axios({
@@ -246,16 +355,28 @@ export default {
   font-size: 0.8em;
   margin: 8px 4px;
 }
+.el-container{
+  width:100%;
+}
 .el-aside {
   padding-right: 16px;
 }
+.div-hint{
+  margin-top: 0;
+  font-size: 0.8em;
+  color: #cccccc;
+}
 .div-box {
-  width: 100%;
+  width: 95%;
+  margin:0 Auto;
   border-radius: 3px;
   min-height: 30px;
   background: #2d2f35;
   display: block;
   padding: 8px;
+}
+.xs-box{
+  padding: 0px 8px 16px 8px;
 }
 .div-tag {
   float: left;
@@ -285,5 +406,10 @@ export default {
   width: 250px;
 }
 
+@media only screen and (min-width: 767px) {
+.xs-box {
+  display:none!important
+}
+}
 
 </style>

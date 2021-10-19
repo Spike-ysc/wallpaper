@@ -2,12 +2,12 @@
   <el-container style="background: #ffffff">
     <el-header>
       <el-row :gutter="20">
-        <el-col class="icon-div" :span="4" :offset="0">
+        <el-col class="icon-div hidden-xs-only" :span="4" :offset="0">
           <el-link class="home-link" :underline="false" @click="homePage">
             Wallpaper
           </el-link>
         </el-col>
-        <el-col :span="12" :offset="0">
+        <el-col :lg="12" :xl="12" :md="12" :sm="12" :xs="24" :offset="0">
           <div style="margin-top: 10px">
             <el-input
               placeholder="请输入内容"
@@ -25,7 +25,7 @@
             </el-input>
           </div>
         </el-col>
-        <el-col class="type-div" :span="8" :offset="0">
+        <el-col class="type-div  hidden-xs-only" :span="8" :offset="0">
           <div>
             <el-checkbox-group v-model="categoryCheck" @change="typeChange">
               <el-checkbox-button
@@ -40,7 +40,7 @@
       </el-row>
     </el-header>
 
-    <el-main height="">
+    <el-main v-bind:style="{minHeight: Height+'px'}">
       <el-row class="main-row" :gutter="20">
         <el-col
           class="main-col"
@@ -55,7 +55,7 @@
         >
           <div class="block block-div">
             <el-image
-              class="wallpaper-img"
+              class="wallpaper-img "
               @click="openImg(wallpaper.imgKey)"
               :src="
                 imgurl +
@@ -73,7 +73,7 @@
                 <i class="el-icon-picture-outline"></i>
               </div>
             </el-image>
-            <div class="msg-div">
+            <div class="msg-div  hidden-xs-only">
               <div class="size-div" onselectstart="return false;">
                 {{ wallpaper.imgSize }} - {{ wallpaper.storageSize }}
               </div>
@@ -139,6 +139,7 @@ import {
   getWindowHeight,
 } from "../../utils/screen";
 import config from "@/http/config";
+import NProgress from 'nprogress';
 
 export default {
   data() {
@@ -157,6 +158,7 @@ export default {
       pageType: 0,
       loadflag: false,
       isLast: false,
+      Height: 0,
     };
   },
   methods: {
@@ -201,6 +203,7 @@ export default {
       this.loadWallpaper();
     },
     loadWallpaper() {
+        NProgress.start();
       this.loadflag = true;
       this.isLast = false;
       if (this.pageType == 0) {
@@ -220,6 +223,7 @@ export default {
           // this.totalElements = res.page.totalElements;
           window.scroll(0, 0);
           console.log(res);
+          NProgress.done()
           this.loadflag = false;
         });
       } else if (this.pageType == 1) {
@@ -233,6 +237,7 @@ export default {
           this.wallpapers = res.content;
           window.scroll(0, 0);
           console.log(res);
+          NProgress.done()
           this.loadflag = false;
         });
       }
@@ -329,6 +334,10 @@ export default {
   },
 
   mounted() {
+      //动态设置内容高度 让footer始终居底   header+footer的高度是100
+    this.Height = document.documentElement.clientHeight - 230;  
+　　//监听浏览器窗口变化　
+    window.onresize = ()=> {this.Height = document.documentElement.clientHeight -230}
     var tag = this.$route.params.tag;
     if (typeof tag == "undefined") {
       this.tags = "";
@@ -371,7 +380,7 @@ export default {
 }
 .main-row {
   margin-bottom: 20px;
-  min-width: 720px;
+  // min-width: 720px;
   &:last-child {
     margin-bottom: 0;
   }
@@ -460,12 +469,14 @@ export default {
   padding: 10px;
 }
 .input-with-select {
-  width: 400px;
+  width: 80%;
+  max-width: 400px;
 }
 footer {
   background-color: #f4f4f4;
   padding-top: 40px;
   padding-bottom: 40px;
+  height: 89px;
   color: #888;
   border-top: 1px solid #e5e5e5;
   display: block;
@@ -473,5 +484,10 @@ footer {
 .foot-msg {
   font-weight: 500;
   font-size: 14px;
+}
+@media only screen and (max-width: 767px) {
+.input-with-select {
+  width: 90%;
+}
 }
 </style>
