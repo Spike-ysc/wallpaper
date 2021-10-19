@@ -7,10 +7,15 @@
     <meta name="referrer" content="no-referrer" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-theme-chalk@2.15.6/lib/index.min.css">
+    <!-- import Vue before Element -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- import JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/element-ui@2.15.6/lib/index.js"></script>
 </head>
 
 <body>
@@ -19,6 +24,7 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
 </body>
 <style>
     body {

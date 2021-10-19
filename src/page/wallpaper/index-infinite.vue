@@ -254,12 +254,11 @@ export default {
               type: "warning",
             });
           }
-           for (let i in res.content) {
-             if(typeof res.content[i].id === "number"){
-
+          for (let i in res.content) {
+            if (typeof res.content[i].id === "number") {
               this.wallpapers.push(res.content[i]);
-             }
             }
+          }
           console.log(res);
           console.log(this.wallpapers);
 
@@ -277,7 +276,9 @@ export default {
             this.isLast = true;
           }
           for (let i in res.content) {
-            this.wallpapers.push(res.content[i]);
+            if (typeof res.content[i].id === "number") {
+              this.wallpapers.push(res.content[i]);
+            }
           }
           // this.wallpapers.push(res._embedded.wallpapers)
           // this.totalElements = res.page.totalElements;

@@ -9,8 +9,8 @@
     },
     "dependencies": {
         "axios": "^0.23.0",
+        "compression-webpack-plugin": "1.1.12",
         "core-js": "^3.6.5",
-        "element-ui": "^2.15.6",
         "node-sass": "4.14.1",
         "progressive-image": "^1.2.0",
         "sass-loader": "^8.0.0",

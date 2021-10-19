@@ -1,13 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import movie from '@/page/movie/movie'
-import wallpaper from '@/page/wallpaper/index'
-import wallpapertotal from '@/page/wallpaper/index-total'
-import animation from '@/page/animation/index'
-import book from '@/page/book/index'
-import photo from '@/page/wallpaper/photo'
-import wallpaperdemo from '@/page/wallpaper/index-demo'
-import error from '@/page/error/404'
+// import movie from '@/page/movie/movie'
+// import wallpaper from '@/page/wallpaper/index'
+// import wallpapertotal from '@/page/wallpaper/index-total'
+// import animation from '@/page/animation/index'
+// import book from '@/page/book/index'
+// import photo from '@/page/wallpaper/photo'
+// import wallpaperinfinite from '@/page/wallpaper/index-infinite'
+// import error from '@/page/error/404'
+
+//路由懒加载
+const movie = () =>
+    import ("../page/movie/movie.vue")
+const wallpaper = () =>
+    import ("../page/wallpaper/index.vue")
+const wallpapertotal = () =>
+    import ("../page/wallpaper/index-total.vue")
+const animation = () =>
+    import ("../page/animation/index.vue")
+const book = () =>
+    import ("../page/book/index.vue")
+const photo = () =>
+    import ("../page/wallpaper/photo.vue")
+const wallpaperinfinite = () =>
+    import ("../page/wallpaper/index-infinite.vue")
+const error = () =>
+    import ("../page/error/404.vue")
 
 Vue.use(Router)
 
@@ -15,7 +33,7 @@ export default new Router({
     routes: [{
             path: '/',
             name: '',
-            component: wallpaper
+            component: wallpaperinfinite
         },
         {
             path: "/photo/:id",
@@ -23,9 +41,9 @@ export default new Router({
             component: photo
         },
         {
-            path: "/wallpaper-demo",
-            name: 'wallpaper-demo',
-            component: wallpaperdemo
+            path: "/wallpaper-infinite",
+            name: 'wallpaper-infinite',
+            component: wallpaperinfinite
         },
         {
             path: '/wallpaper-total',

@@ -50,7 +50,7 @@ export const getWallpaperByTags = (tags, purity, category, page, size) => http.g
 });
 
 //模糊搜索不同tag的壁纸，并按观看次数由高到低排列
-export const getWallpaperByTagsList = (tags, purity, category, page, size) => http.get("wallpapers/search/tags-list", {
+export const getWallpaperByTagsList = (tags, purity, category, page, size) => http.get("wallpaper/tag-list", {
     tags: tags,
     purity: purity,
     category: category,
