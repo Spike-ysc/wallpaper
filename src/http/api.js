@@ -59,6 +59,16 @@ export const getWallpaperByTagsList = (tags, purity, category, page, size) => ht
 
 });
 
+//模糊搜索不同color的壁纸，并按观看次数由高到低排列
+export const getWallpaperByColorsList = (colors, purity, category, page, size) => http.get("wallpaper/color-list-dim", {
+    colors: colors,
+    purity: purity,
+    category: category,
+    page: page,
+    size: size,
+
+});
+
 export const getAnimations = (page, size) => http.get("animations", {
     page: page,
     size: size

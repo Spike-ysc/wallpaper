@@ -48,7 +48,7 @@
                 <el-link
                   class="box-link"
                   :underline="false"
-                  @click="homePage"
+                  @click="homePage(color)"
                   >{{ color }}</el-link
                 >
               </div>
@@ -127,7 +127,7 @@
                 <el-link
                   class="box-link"
                   :underline="false"
-                  @click="homePage"
+                  @click="homePage(color)"
                   >{{ color }}</el-link
                 >
               </div>

@@ -1,12 +1,23 @@
 <template>
+<el-container :direction="vertical">
+  <el-header height="">
+     <el-link class="home-link" :underline="false" @click="homePage">
+            Wallpaper
+          </el-link>
+  </el-header>
+  <el-container :direction="horizontal">
+    
   <div class="main">
-      <div class="progressive">
+      <!-- <div class="progressive">
        <img class="preview" v-progressive="src" :src="preview" />
-      </div>
-      <!-- <div class="progressive" v-for="(item,index) in imgs" :key="index">
-      <img class="preview" v-progressive="item.src" :src="item.preview" />
-    </div> -->
+      </div> -->
+      <img width="40%" src="../../assets/404.svg"/><br>
+      <el-button type="primary" size="default" @click="homePage">返回首页</el-button>
+      
   </div>
+  </el-container>
+</el-container>
+
 </template>
 
 <script>
@@ -28,6 +39,10 @@ export default {
     };
   },
   methods: {
+homePage(){
+  
+      this.$router.push(`/`) ;
+}
   },
   mounted() {
   },
@@ -36,13 +51,22 @@ export default {
 
 <style scoped lang="scss">
 .main {
-  background: #1f2023;
-//   height: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  overflow: hidden;
+//   background: #FFFFFF;
+// //   height: 100%;
+//   position: absolute;
+//   top: 0px;
+//   left: 0px;
+//   width: 100%;
+//   overflow: hidden;
+margin: 0 Auto;
+}
+.el-header{
+  padding: 16px;
+}
+.home-link {
+  float: left;
+  font-size: 20px;
+  user-select: none;
 }
 
 </style>

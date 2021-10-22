@@ -163,9 +163,9 @@ export default {
       size: 24,
       currentPage: 1,
       purity: "SFW",
-      categoryCheck: ["动漫"],
+      categoryCheck: ["普通","动漫"],
       categories: ["普通", "动漫", "人物"],
-      category: ["Anime"],
+      category: ["General","Anime"],
       categoryDict: { 普通: "General", 动漫: "Anime", 人物: "People" },
       tags: "",
       pageType: 0,
@@ -183,8 +183,8 @@ export default {
     },
     homePage() {
       this.tags = "";
-      this.categoryCheck = ["动漫"];
-      this.category = ["Anime"];
+      this.categoryCheck = ["普通","动漫"];
+      this.category = ["General","Anime"];
       this.currentPage = 1;
       this.setContextData("currentPage", this.currentPage);
       this.pageType = 0;
@@ -238,7 +238,7 @@ export default {
           NProgress.done()
         });
       } else if (this.pageType == 1) {
-        
+        document.title = this.tags+"-搜索";
         getWallpaperByTags(
           this.tags,
           this.purity,

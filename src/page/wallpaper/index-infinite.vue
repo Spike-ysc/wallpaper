@@ -25,7 +25,7 @@
             </el-input>
           </div>
         </el-col>
-        <el-col class="type-div  hidden-xs-only" :span="8" :offset="0">
+        <el-col class="type-div hidden-xs-only" :span="8" :offset="0">
           <div>
             <el-checkbox-group v-model="categoryCheck" @change="typeChange">
               <el-checkbox-button
@@ -40,7 +40,7 @@
       </el-row>
     </el-header>
 
-    <el-main v-bind:style="{minHeight: Height+'px'}">
+    <el-main v-bind:style="{ minHeight: Height + 'px' }">
       <el-row class="main-row" :gutter="20">
         <el-col
           class="main-col"
@@ -55,7 +55,7 @@
         >
           <div class="block block-div">
             <el-image
-              class="wallpaper-img "
+              class="wallpaper-img"
               @click="openImg(wallpaper.imgKey)"
               :src="
                 imgurl +
@@ -73,7 +73,7 @@
                 <i class="el-icon-picture-outline"></i>
               </div>
             </el-image>
-            <div class="msg-div  hidden-xs-only">
+            <div class="msg-div hidden-xs-only">
               <div class="size-div" onselectstart="return false;">
                 {{ wallpaper.imgSize }} - {{ wallpaper.storageSize }}
               </div>
@@ -132,14 +132,18 @@
 </template>
 
 <script>
-import { getWallpaperByTagsList, getWallpaperByTypeList } from "@/http/api";
+import {
+  getWallpaperByTagsList,
+  getWallpaperByTypeList,
+  getWallpaperByColorsList,
+} from "@/http/api";
 import {
   getScrollHeight,
   getScrollTop,
   getWindowHeight,
 } from "../../utils/screen";
 import config from "@/http/config";
-import NProgress from 'nprogress';
+import NProgress from "nprogress";
 
 export default {
   data() {
@@ -150,9 +154,9 @@ export default {
       size: 24,
       currentPage: 1,
       purity: "SFW",
-      categoryCheck: ["动漫"],
+      categoryCheck: ["普通","动漫"],
       categories: ["普通", "动漫", "人物"],
-      category: ["Anime"],
+      category: ["General","Anime"],
       categoryDict: { 普通: "General", 动漫: "Anime", 人物: "People" },
       tags: "",
       pageType: 0,
@@ -169,8 +173,8 @@ export default {
     },
     homePage() {
       this.tags = "";
-      this.categoryCheck = ["动漫"];
-      this.category = ["Anime"];
+      this.categoryCheck = ["普通","动漫"];
+      this.category = ["General","Anime"];
       this.currentPage = 1;
       this.setContextData("currentPage", this.currentPage);
       this.pageType = 0;
@@ -203,10 +207,11 @@ export default {
       this.loadWallpaper();
     },
     loadWallpaper() {
-        NProgress.start();
+      NProgress.start();
       this.loadflag = true;
       this.isLast = false;
       if (this.pageType == 0) {
+        document.title = "wallpaper-壁纸";
         getWallpaperByTypeList(
           this.purity,
           this.category.join(","),
@@ -223,23 +228,42 @@ export default {
           // this.totalElements = res.page.totalElements;
           window.scroll(0, 0);
           console.log(res);
-          NProgress.done()
+          NProgress.done();
           this.loadflag = false;
         });
       } else if (this.pageType == 1) {
-        getWallpaperByTagsList(
-          this.tags,
-          this.purity,
-          this.category.join(","),
-          this.currentPage - 1,
-          this.size
-        ).then((res) => {
-          this.wallpapers = res.content;
-          window.scroll(0, 0);
-          console.log(res);
-          NProgress.done()
-          this.loadflag = false;
-        });
+        document.title = this.tags + "-搜索";
+        if (this.tags.substring(0, 1) != "#") {
+          getWallpaperByTagsList(
+            this.tags,
+            this.purity,
+            this.category.join(","),
+            this.currentPage - 1,
+            this.size
+          ).then((res) => {
+            this.wallpapers = res.content;
+            window.scroll(0, 0);
+            console.log(res);
+            NProgress.done();
+            this.loadflag = false;
+          });
+        } else {
+          var colors = this.tags.replaceAll('#', '')
+          console.log('color:'+colors)
+          getWallpaperByColorsList(
+            colors,
+            this.purity,
+            this.category.join(","),
+            this.currentPage - 1,
+            this.size
+          ).then((res) => {
+            this.wallpapers = res.content;
+            window.scroll(0, 0);
+            console.log(res);
+            NProgress.done();
+            this.loadflag = false;
+          });
+        }
       }
     },
 
@@ -270,27 +294,47 @@ export default {
           this.loadflag = false;
         });
       } else if (this.pageType == 1) {
-        getWallpaperByTagsList(
-          this.tags,
-          this.purity,
-          this.category.join(","),
-          this.currentPage - 1,
-          this.size
-        ).then((res) => {
-          if (res.content.length == 0) {
-            this.isLast = true;
-          }
-          for (let i in res.content) {
-            if (typeof res.content[i].id === "number") {
-              this.wallpapers.push(res.content[i]);
+        if (this.tags.substring(0, 1) != "#") {
+          getWallpaperByTagsList(
+            this.tags,
+            this.purity,
+            this.category.join(","),
+            this.currentPage - 1,
+            this.size
+          ).then((res) => {
+            if (res.content.length == 0) {
+              this.isLast = true;
             }
-          }
-          // this.wallpapers.push(res._embedded.wallpapers)
-          // this.totalElements = res.page.totalElements;
-          //   window.scroll(0, 0);
-          console.log(res);
-          this.loadflag = false;
-        });
+            for (let i in res.content) {
+              if (typeof res.content[i].id === "number") {
+                this.wallpapers.push(res.content[i]);
+              }
+            }
+            console.log(res);
+            this.loadflag = false;
+          });
+        } else {
+          var colors = this.tags.replaceAll('#', '')
+          console.log('color:'+colors)
+          getWallpaperByColorsList(
+            colors,
+            this.purity,
+            this.category.join(","),
+            this.currentPage - 1,
+            this.size
+          ).then((res) => {
+            if (res.content.length == 0) {
+              this.isLast = true;
+            }
+            for (let i in res.content) {
+              if (typeof res.content[i].id === "number") {
+                this.wallpapers.push(res.content[i]);
+              }
+            }
+            console.log(res);
+            this.loadflag = false;
+          });
+        }
       }
     },
     //给sessionStorage存值
@@ -334,10 +378,11 @@ export default {
   },
 
   mounted() {
-      //动态设置内容高度 让footer始终居底   header+footer的高度是100
-    this.Height = document.documentElement.clientHeight - 230;  
-　　//监听浏览器窗口变化　
-    window.onresize = ()=> {this.Height = document.documentElement.clientHeight -230}
+    //动态设置内容高度 让footer始终居底   header+footer的高度是100
+    this.Height = document.documentElement.clientHeight - 230; //监听浏览器窗口变化
+    window.onresize = () => {
+      this.Height = document.documentElement.clientHeight - 230;
+    };
     var tag = this.$route.params.tag;
     if (typeof tag == "undefined") {
       this.tags = "";
@@ -486,8 +531,8 @@ footer {
   font-size: 14px;
 }
 @media only screen and (max-width: 767px) {
-.input-with-select {
-  width: 90%;
-}
+  .input-with-select {
+    width: 90%;
+  }
 }
 </style>

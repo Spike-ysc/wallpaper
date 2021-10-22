@@ -24,6 +24,16 @@ Vue.config.productionTip = false
 // Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 
+const _hmt = _hmt || [];
+
+window._hmt = _hmt; // 必须把_hmt挂载到window下，否则找不到
+(function() {
+    const hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?6f2212ee8e3fd2f83702bd023606f48e';
+    const s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+}());
+
 NProgress.configure({
     easing: 'ease', // 动画方式    
     speed: 500, // 递增进度条的速度    
@@ -34,9 +44,26 @@ NProgress.configure({
 router.beforeEach((to, from, next) => {
     // 每次切换页面时，调用进度条
     NProgress.start();
-
-    // 这个一定要加，没有next()页面不会跳转的。这部分还不清楚的去翻一下官网就明白了
-    next();
+    if (to.meta.title) {
+        //判断是否有标题
+        console.log(to.meta.title)
+        document.title = to.meta.title
+    } else {
+        document.title = 'Wallpaper-壁纸'
+    }
+    if (_hmt) {
+        if (to.path) {
+            // eslint-disable-next-line
+            _hmt.push(['_trackPageview', to.fullPath]);
+        }
+    }
+    if (to.matched.length === 0) {
+        from.name ? next({
+            name: from.name
+        }) : next('/error');
+    } else {
+        next();
+    }
 });
 
 router.afterEach(() => {

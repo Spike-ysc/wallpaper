@@ -7,7 +7,7 @@ import Router from 'vue-router'
 // import book from '@/page/book/index'
 // import photo from '@/page/wallpaper/photo'
 // import wallpaperinfinite from '@/page/wallpaper/index-infinite'
-// import error from '@/page/error/404'
+import error404 from '@/page/error/404'
 
 //路由懒加载
 const movie = () =>
@@ -33,27 +33,42 @@ export default new Router({
     routes: [{
             path: '/',
             name: '',
-            component: wallpaperinfinite
+            component: wallpaperinfinite,
+            meta: {
+                title: 'Wallpaper-壁纸'
+            }
         },
         {
             path: "/photo/:id",
             name: 'photo',
-            component: photo
+            component: photo,
+            meta: {
+                title: '壁纸详情'
+            }
         },
         {
             path: "/wallpaper-infinite",
             name: 'wallpaper-infinite',
-            component: wallpaperinfinite
+            component: wallpaperinfinite,
+            meta: {
+                title: 'Wallpaper-壁纸'
+            }
         },
         {
             path: '/wallpaper-total',
             name: 'wallpaper-total',
-            component: wallpapertotal
+            component: wallpapertotal,
+            meta: {
+                title: 'Wallpaper-壁纸'
+            }
         },
         {
             path: '/wallpaper',
             name: 'Wallpaper',
-            component: wallpaper
+            component: wallpaper,
+            meta: {
+                title: 'Wallpaper-壁纸'
+            }
         },
         {
             path: '/movie',
@@ -73,7 +88,10 @@ export default new Router({
         {
             path: '/error',
             name: 'error',
-            component: error
+            component: error404,
+            meta: {
+                title: '404'
+            }
         }
     ]
 })
