@@ -18,7 +18,8 @@ module.exports = {
         ],
         externals: {
             'vue': 'Vue',
-            'element-ui': 'ELEMENT'
+            'element-ui': 'ELEMENT',
+            'AMap': 'AMap'
         }
 
     },

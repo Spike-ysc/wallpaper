@@ -16,6 +16,8 @@ const wallpaper = () =>
     import ("../page/wallpaper/index.vue")
 const wallpapertotal = () =>
     import ("../page/wallpaper/index-total.vue")
+const wallpapertime = () =>
+    import ("../page/wallpaper/index-time.vue")
 const animation = () =>
     import ("../page/animation/index.vue")
 const book = () =>
@@ -26,6 +28,12 @@ const wallpaperinfinite = () =>
     import ("../page/wallpaper/index-infinite.vue")
 const error = () =>
     import ("../page/error/404.vue")
+const keyboard = () =>
+    import ("../page/keyboard/index.vue")
+const anima = () =>
+    import ("../page/animation/home.vue")
+const friend = () =>
+    import ("../page/friend/index.vue")
 
 Vue.use(Router)
 
@@ -44,6 +52,14 @@ export default new Router({
             component: photo,
             meta: {
                 title: '壁纸详情'
+            }
+        },
+        {
+            path: "/wallpaper-time",
+            name: 'wallpaper-time',
+            component: wallpapertime,
+            meta: {
+                title: 'Wallpaper-壁纸-更新时间'
             }
         },
         {
@@ -78,7 +94,10 @@ export default new Router({
         {
             path: '/animation',
             name: 'animation',
-            component: animation
+            component: animation,
+            meta: {
+                title: 'Animation'
+            }
         },
         {
             path: '/book',
@@ -91,6 +110,27 @@ export default new Router({
             component: error404,
             meta: {
                 title: '404'
+            }
+        }, {
+            path: '/keyboard',
+            name: 'keyboard',
+            component: keyboard,
+            meta: {
+                title: '键盘按键测试'
+            }
+        }, {
+            path: '/anima',
+            name: 'anima',
+            component: anima,
+            meta: {
+                title: 'Anima'
+            }
+        }, {
+            path: '/friend',
+            name: 'friend',
+            component: friend,
+            meta: {
+                title: 'Friend'
             }
         }
     ]

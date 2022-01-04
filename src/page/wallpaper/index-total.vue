@@ -136,6 +136,7 @@
 import {
   getWallpaperByType,
   getWallpaperByTags,
+  getWallpaperByTime,
 } from "@/http/api";
 
 export default {
@@ -208,6 +209,17 @@ export default {
           window.scroll(0, 0);
           console.log(res);
         });
+        //  getWallpaperByTime(
+        //   this.purity.join(','),
+        //   this.category.join(','),
+        //   1,
+        //   this.size
+        // ).then((res) => {
+        //   this.wallpapers = res._embedded.wallpapers;
+        //   this.totalElements = res.page.totalElements;
+        //   window.scroll(0, 0);
+        //   console.log(res);
+        // });
       } else if (this.pageType == 1) {
         getWallpaperByTags(
           this.tags,

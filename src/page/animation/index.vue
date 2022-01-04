@@ -33,6 +33,23 @@
     </el-header>
 
     <el-main height="">
+      
+       <!-- <el-carousel indicator-position="outside">
+    <el-carousel-item v-for="item in 4" :key="item">
+      
+      <h3>{{ item }}</h3>
+    </el-carousel-item>
+  </el-carousel> -->
+  <el-carousel height="150px" type="default" direction="horizontal"
+    :initial-index="0" :autoplay="true" :interval="3000" :loop="true"
+    trigger="hover" indicator-position="outside" arrow="hover">
+    <el-carousel-item v-for="item in items" :key="item.key" >
+      <el-image :src="item.url" fit="fill" :lazy="true"></el-image>
+      <!-- content -->
+      <!-- <h3>{{item.title}}</h3> -->
+    </el-carousel-item>
+  </el-carousel>
+  
       <h1>Animation</h1>
       <el-row class="main-row" :gutter="20">
         <el-col
@@ -112,6 +129,12 @@ export default {
       pageType: 0,
       baseImg: 'http://localhost:8081/poster/',
       imgFit: "contain",
+      items:[
+        {url:'http://localhost:8081/poster/1291560.jpg',title:'1'},
+        {url:'http://localhost:8081/poster/1291560.jpg',title:'2'},
+        {url:'http://localhost:8081/poster/1291560.jpg',title:'3'},
+        {url:'http://localhost:8081/poster/1291560.jpg',title:'4'},
+      ]
     };
   },
   methods: {
@@ -316,7 +339,7 @@ export default {
   position: fixed;
   width: 100%;
   background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 .icon-div {
   padding: 15px 10px;

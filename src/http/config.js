@@ -1,8 +1,8 @@
 export default {
 
     method: 'get',
-    baseURL: 'http://192.168.43.167:8081/api/',
-    imgBaseUrl: 'http://192.168.43.167:8081/img/',
+    baseURL: 'http://localhost:8081/api/',
+    imgBaseUrl: 'http://localhost:8081/img/',
     headers: {
         'Content-Type': 'application/json;charset=UTF-8'
     },

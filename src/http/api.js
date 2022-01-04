@@ -69,6 +69,13 @@ export const getWallpaperByColorsList = (colors, purity, category, page, size) =
 
 });
 
+export const getWallpaperByTime = (purity, category, page, size) => http.get("wallpaper/upload-time", {
+    purity: purity,
+    category: category,
+    page: page,
+    size: size,
+})
+
 export const getAnimations = (page, size) => http.get("animations", {
     page: page,
     size: size

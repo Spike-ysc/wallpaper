@@ -38,3 +38,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 12. 默认风景和动画(已完成)
 13. 增加百度站长统计(已完成)
 14. 增加Ehcache缓存机制（已完成）
+15. 页面最大宽度
+16. 最近更新
